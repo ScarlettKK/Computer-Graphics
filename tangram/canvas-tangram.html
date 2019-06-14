@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>canvas-tangram</title>
+</head>
+<body>
+    <canvas id="canvas" style="border: 1px solid #ccc"></canvas>
+</body>
+<script type="text/javascript">
+    // 获取当前canvas元素区域
+    var canvas = document.getElementById("canvas");
+
+    // 设置canvas元素宽高
+    canvas.width = 500
+    canvas.height = 500
+
+    // 获取canvas元素内容
+    var content = canvas.getContext("2d");
+
+    // 使用一个数组来存储七巧板各个点的值
+    // 格式为:{path:[p1,p2,p3...],color:#}
+    var tangram = [
+        {path:[{x:0,y:0},{x:500,y:0},{x:250,y:250}], color:"#caff67"},
+        {path:[{x:0,y:0},{x:250,y:250},{x:0,y:500}], color:"#67becf"},
+        {path:[{x:500,y:0},{x:500,y:250},{x:375,y:375},{x:375,y:125}], color:"#ef3d61"},
+        {path:[{x:375,y:125},{x:375,y:375},{x:250,y:250}], color:"#f9f51a"},
+        {path:[{x:250,y:250},{x:375,y:375},{x:250,y:500},{x:125,y:375}], color:"#a594c0"},
+        {path:[{x:125,y:375},{x:250,y:500},{x:0,y:500}], color:"#fa8ccc"},
+        {path:[{x:500,y:250},{x:500,y:500},{x:250,y:500}], color:"#f6ca29"}
+    ]
+
+    // 下面对canvas元素内容进行设置与更改
+    // 逐个画点
+    for(let i=0; i < tangram.length; i++){
+        draw(tangram[i])
+    }
+
+    function draw(pic){
+        // 使用beginPath、closePath避免样式互相覆盖污染
+        content.beginPath();
+        // 将画笔移动到起始点!
+        content.moveTo(pic.path[0].x, pic.path[0].y);
+        // 开始依次移动到目标点,一边移动一边画线
+        for(let i=1; i < pic.path.length; i++) {
+            content.lineTo(pic.path[i].x,pic.path[i].y)
+        }
+        // 使用beginPath、closePath避免样式互相覆盖污染
+        content.closePath();
+
+        // 填充画笔颜色
+        content.fillStyle=pic.color;
+        // 将绘图区域全部填充颜色
+        content.fill();
+    }
+    
+</script>
+</html>
