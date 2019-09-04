@@ -80,7 +80,25 @@ three.js 可以应用于 3D游戏 3D可视化 webAI
 
 ### ES6相关特性使用
 
-### Three.js核心概念
+## Charpter3 Three.js核心概念
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6nkkkdr1kj31ds0n07ku.jpg">
+
+为什么不使用webGL直接进行开发?
+
+webGL是相对底层的代码, 相当于不用框架用原生的JS进行开发, 对于大型项目组织架构和开发思路不利. 而使用Three.js进行开发, 相当于使用了框架, 进行了底层的抽象和设计模式的封装.
+
+### 什么是webGL?
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6nkkp4ig3j31ds0n0to2.jpg">
+
+OpenGL ES (OpenGL for Embedded Systems) 是 OpenGL三维图形 API 的子集，针对手机、PDA和游戏主机等嵌入式设备而设计. 
+
+OpenGL ES提供了控制移动端显卡的一系列接口, 移除了OpenGL中一些低效的API, 并针对移动端作出了优化.
+
+webGL是OpenGL ES标准在 JS上的一个绑定, 基本标准与OpenGL相同, 并且在浏览器环境下运行.
+
+在实际游戏场景中, 需要很大的矩阵变换运算量, 所以需要高性能的显卡, 以及代码能力的调优.
 
 ### 游戏开发与调优
 
