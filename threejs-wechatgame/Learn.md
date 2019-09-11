@@ -100,9 +100,19 @@ webGL是OpenGL ES标准在 JS上的一个绑定, 基本标准与OpenGL相同, �
 
 在实际游戏场景中, 需要很大的矩阵变换运算量, 所以需要高性能的显卡, 以及代码能力的调优.
 
-GPU(图形处理器)的ALU(计算单元)部分非常多, 但相对CPU没有很强的控制能力与缓存能力, 不适用于执行复杂的控制逻辑指令集, 适用于数量巨大重复较多的简单运算指令(如矩阵运算)
+### GPU
+
+GPU(图形处理器)的ALU(计算单元)部分非常多, 但相对CPU没有很强的控制能力(control)与缓存能力(cache), 不适用于执行复杂的控制逻辑指令集, 适用于数量巨大重复较多的简单运算指令(如矩阵运算)
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6telwrv9aj31ds0n0q44.jpg">
+
+如何对GPU进行编程?
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6vwri6dp8j31ds0n0dhr.jpg">
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6vwrpppmuj31ds0n0q4g.jpg">
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6vwrvai86j31ds0n076h.jpg">
 
 ### 游戏开发与调优
 
