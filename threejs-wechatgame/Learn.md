@@ -108,11 +108,31 @@ GPU(图形处理器)的ALU(计算单元)部分非常多, 但相对CPU没有很�
 
 如何对GPU进行编程?
 
+openGL2.0之后的版本支持对显卡着色器进行编程,这样我们就可以利用上显卡的一些并行运算的能力
+
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6vwri6dp8j31ds0n0dhr.jpg">
+
+webGL编程分两部分
+
+	webGL本身标准, 这部分标准由JS提供, 拥有一系列API
+
+	GLSL着色器语言, 通过对顶点着色器(vertex shader)以及片元着色器(fragment shader)的编程, 就可以对GPU的渲染管道进行编程与控制, 这部分不是通过JS进行开发, 而是通过shading language进行开发, 有点类似C语言的语法
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6vwrpppmuj31ds0n0q4g.jpg">
 
+memory: 渲染管线里面会有显存, 专门用于存储顶点与片元的数据, 有专门的存储优化, 读取数据效率较高
+
+js: 提供图形数据(如三角形三个顶点坐标,颜色)给顶点着色器(vertex shader)以及片元着色器(fragment shader), 在memory创造buffer, 方便着色器来读取
+
+vertex shader: 确定图形顶点
+
+fragment shader: 确定顶点之间的颜色(上色)
+
+frame buffer: 在绘制到屏幕上面之前的buffer, 类似于草稿纸 
+
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6vwrvai86j31ds0n076h.jpg">
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g79l96vqedj31ds0n0k04.jpg">
 
 ### 游戏开发与调优
 
