@@ -134,6 +134,8 @@ frame buffer: 在绘制到屏幕上面之前的buffer, 类似于草稿纸
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g79l96vqedj31ds0n0k04.jpg">
 
+WebGL实战一: demo/demo.html 旋转的三角形
+
 ### 游戏开发与调优
 
 ## 需求分析
