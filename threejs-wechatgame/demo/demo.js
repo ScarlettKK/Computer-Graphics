@@ -1,4 +1,27 @@
 ///////////////////////shader绑定流程(静态3D图)///////////////////////////
+
+/*
+创建静态3D图[针对webgl绘图环境类型]流程总结:
+1. 获取html canvas dom元素
+2. 通过该dom元素的 getContext方法, 获取到用于在画布上绘图的环境, 该环境才具有在canvas上绘制的能力
+   这个环境可以由传入的参数指定类型, 具体有如下类型:
+     "2d", 建立一个 CanvasRenderingContext2D 二维渲染上下文。
+     "webgl" (或"experimental-webgl") 这将创建一个 WebGLRenderingContext 三维渲染上下文对象。只在实现WebGL 版本1(OpenGL ES 2.0)的浏览器上可用。
+     "webgl2" (或 "experimental-webgl2") 这将创建一个 WebGL2RenderingContext 三维渲染上下文对象。只在实现 WebGL 版本2 (OpenGL ES 3.0)的浏览器上可用。
+     "bitmaprenderer" 这将创建一个只提供将canvas内容替换为指定ImageBitmap功能的ImageBitmapRenderingContext。
+3. 在webgl绘图环境中, 创建一个 WebGLProgram (一个webgl绘图环境中可以创建多个WebGLProgram, 每个WebGLProgram有自己的顶点着色器、片元着色器, 也就是对眼不同的静态图像)
+   WebGLProgram 是 WebGL API 的一部分，它由两个WebGLShaders （webgl 着色器）组成，
+   分别为顶点着色器和片元着色器（两种着色器都是采用 GLSL 语言编写的）。
+   创建一个 WebGLProgram 需要调用 GL 绘图环境的createProgram() 方法.
+4. 定义 顶点着色器、片元着色器 (要在哪里画什么图像, 什么颜色)
+5. 然后调用 GL 绘图环境的attachShader()方法给 WebGLProgram 附加上如上所述两个着色器, 一个完整的 WebGLProgram 就此创建完成
+6. 调用 GL 绘图环境的 linkProgram、useProgram 方法, 将这个完整的 WebGLProgram 连接 和 使用到 GL 绘图环境中
+7. (附加)可以给GL 绘图环境扩展属性program值为WebGLProgram, 便于访问
+*/
+
+
+
+
 // 获取canvas dom元素, 但这个dom元素并没有绘制的能力, 只有长宽的属性
 var canvas = document.getElementById('myCanvas')
 // 需要通过canvas dom元素的getContext方法获取到 -> 用于在画布上绘图的环境, 该环境才具有在canvas上绘制的能力
