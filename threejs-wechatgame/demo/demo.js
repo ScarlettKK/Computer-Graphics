@@ -53,6 +53,7 @@ var program = gl.createProgram()
 // 更好地访问到program
 // gl.program = program
 
+///////////////////// 创建两个 shader ////////////////////////
 var VSHADER_SOURCE, FSHADER_SOURCE
 
 // 顶点着色器源代码
@@ -76,9 +77,9 @@ var vertexShader, fragmentShader
 // 创建 顶点着色器、片元着色器 的函数
 function createShader (gl, sourceCode, type) {
   // create shader
-  // 根据传递进来的type 创建对应的着色器
+  // 根据传递进来的type 创建对应的shader
   var shader = gl.createShader(type)
-  // 挂载相关的 source 代码
+  // shader 挂载相关的 source 代码
   gl.shaderSource(shader, sourceCode)
   // 编译相关的 shader 代码
   gl.compileShader(shader)
@@ -91,6 +92,8 @@ function createShader (gl, sourceCode, type) {
 vertexShader = createShader(gl, VSHADER_SOURCE, gl.VERTEX_SHADER)
 // define frament shader
 fragmentShader = createShader(gl, FSHADER_SOURCE, gl.FRAGMENT_SHADER)
+
+///////////////////// 创建两个 shader ////////////////////////
 
 // attach shader to program
 gl.attachShader(program, vertexShader)
