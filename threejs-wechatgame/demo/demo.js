@@ -57,20 +57,21 @@ var program = gl.createProgram()
 var VSHADER_SOURCE, FSHADER_SOURCE
 
 // 顶点着色器源代码
+// 详解见learn.md "glsl语法三种数据类型"
 VSHADER_SOURCE =
-  'attribute vec4 a_Position;\n' + 
+  'attribute vec4 a_Position;\n' +  // 通过attribute类型定义顶点坐标, vec4是四维向量的意思
   'uniform mat4 u_ModelMatrix;\n' +
   'uniform mat4 u_ViewMatrix;\n' +
   'uniform mat4 u_ProjectionMatrix;\n' + 
   'void main () {\n' + 
     'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' + 
-  '}\n'
+  '}\n' // 两个着色器都得有一个main函数(入口函数)
 
 // 片元着色器源代码
 FSHADER_SOURCE =
   'void main () {\n' + 
-    'gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' + 
-  '}\n'
+    'gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +  // 全部渲染红色, gl_FragColor是内部定义好的变量
+  '}\n' // 两个着色器都得有一个main函数(入口函数)
 
 var vertexShader, fragmentShader
 
@@ -103,31 +104,36 @@ gl.attachShader(program, fragmentShader)
 gl.linkProgram(program)
 gl.useProgram(program)
 gl.program = program
-///////////////////////shader绑定流程(静态3D图)///////////////////////////
 
-
-
-
-///////////////////////动态3D图部分///////////////////////////
 var currentAngle = 0
 var g_last = Date.now()
 
 var tick = function () {
   // update the new rotation angle
+  // 动态3D图部分 animate
   animate()
   // draw
   draw()
   requestAnimationFrame(tick)
 }
 
+// 通过buffer往shader中传递相关的数据
 function initVertexBuffers (gl) {
+  // 顶点数据
   var vertices = new Float32Array([
     0, 0.5, -0.5, -0.5, 0.5, -0.5
   ])
   var n = 3
+  // 创建 buffer
   var vertexBuffer = gl.createBuffer()
+  // 将buffer绑定在gl(用于在画布上绘图的环境)上
+  // gl.ARRAY_BUFFER : 顶点缓冲区对象 -> 适用于简单图形界面
+  // gl.ELEMENT_ARRAY_BUFFER : 顶点索引缓冲区对象 -> 适用于多图形界面, 多个图形有重合的点(重复的点),使用索引来减少buffer的使用空间,相同的顶点坐标使用相同的索引即可
+  // 参考链接: 了解OpenGL的几种Array Buffer: https://www.cnblogs.com/shenwenkai/p/6207562.html
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
   // write data into the buffer object
+  // 给buffer中加入顶点数据vertices
+  // gl.STATIC_DRAW: 如何管理缓冲区? 一次渲染后不会对缓冲区修改的意思, 是优化策略的一种
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
   // get attribute a_Position address in vertex shader
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position')
@@ -154,13 +160,6 @@ var projectionMatrix = new Matrix4()
 // projectionMatrix.perspective(120, 1, 0.1, 1000)
 projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
 
-function animate () {
-  var now = Date.now()
-  var duration = now - g_last
-  g_last = now
-  currentAngle = currentAngle + duration / 1000 * 180
-}
-
 function draw () {
   // clear canvas and add background color
   modelMatrix.setRotate(currentAngle, 0, 1, 0)
@@ -172,4 +171,18 @@ function draw () {
 }
 
 tick()
+///////////////////////shader绑定流程(静态3D图)///////////////////////////
+
+
+
+
+///////////////////////动态3D图部分///////////////////////////
+
+function animate () {
+  var now = Date.now()
+  var duration = now - g_last
+  g_last = now
+  currentAngle = currentAngle + duration / 1000 * 180
+}
+
 ///////////////////////动态3D图部分///////////////////////////

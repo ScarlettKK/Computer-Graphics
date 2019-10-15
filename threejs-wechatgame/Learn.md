@@ -137,7 +137,12 @@ frame buffer: 在绘制到屏幕上面之前的buffer, 类似于草稿纸
 WebGL实战一: demo/demo.html 旋转的三角形
 
 	内容补充: 着色器源代码 详解
+
 	glsl语法三种数据类型
+	1. attribute类型 只能在顶点着色器中使用,用于传递顶点数据
+	2. uniform类型   常量,不可被着色器修改,可以在两个着色器之间共享,相当于一个全局变量
+	3. varying类型   在两个shader之间传递数据用
+
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g7xu007lt4j31ds0n0kes.jpg">
 
