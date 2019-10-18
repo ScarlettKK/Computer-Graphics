@@ -1,3 +1,4 @@
+// webgl 官方文档与API https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API
 ///////////////////////shader绑定流程(静态3D图)///////////////////////////
 
 /*
@@ -105,17 +106,17 @@ gl.linkProgram(program)
 gl.useProgram(program)
 gl.program = program
 
-var currentAngle = 0
-var g_last = Date.now()
+// var currentAngle = 0
+// var g_last = Date.now()
 
-var tick = function () {
-  // update the new rotation angle
-  // 动态3D图部分 animate
-  animate()
-  // draw
-  draw()
-  requestAnimationFrame(tick)
-}
+// var tick = function () {
+//   // update the new rotation angle
+//   // 动态3D图部分 animate
+//   // animate()
+//   // draw
+//   draw()
+//   // requestAnimationFrame(tick)
+// }
 
 // 通过buffer往shader中传递相关的数据
 function initVertexBuffers (gl) {
@@ -135,10 +136,16 @@ function initVertexBuffers (gl) {
   // 给buffer中加入顶点数据vertices
   // gl.STATIC_DRAW: 如何管理缓冲区? 一次渲染后不会对缓冲区修改的意思, 是优化策略的一种
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
+
+  // 现在缓冲区之中已经有数据了, 现在是要把缓冲区的数据传给shader的变量
+
   // get attribute a_Position address in vertex shader
+  // 在 program 之中创建一个a_Position, 作为画布中展示图像的位置
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position')
+  // a_Position 和 buffer data绑定, 并且定义接收策略: 几个数字作一组成为一个坐标?数据类型是什么?
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0)
   // enable a_Position variable
+  // 启用a_Position
   gl.enableVertexAttribArray(a_Position)
   return n
 }
@@ -146,31 +153,40 @@ function initVertexBuffers (gl) {
 // write the positions of vertices to a vertex shader
 var n = initVertexBuffers(gl)
 
+
+
+// 绘制工作
+
+
+
+// clear canvas and add background color
+// 用黑色清空当前画布颜色
 gl.clearColor(0, 0, 0, 1)
 
-var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix')
-var modelMatrix = new Matrix4()
+// var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix')
+// var modelMatrix = new Matrix4()
 
-var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
-var viewMatrix = new Matrix4()
-viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
+// var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
+// var viewMatrix = new Matrix4()
+// viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
 
-var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
-var projectionMatrix = new Matrix4()
-// projectionMatrix.perspective(120, 1, 0.1, 1000)
-projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
+// var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
+// var projectionMatrix = new Matrix4()
+// // projectionMatrix.perspective(120, 1, 0.1, 1000)
+// projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
 
 function draw () {
-  // clear canvas and add background color
-  modelMatrix.setRotate(currentAngle, 0, 1, 0)
-  gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements)
-  gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
-  gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
+  // modelMatrix.setRotate(currentAngle, 0, 1, 0)
+  // gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements)
+  // gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
+  // gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
   gl.clear(gl.COLOR_BUFFER_BIT)
+  // 绘制三角形
   gl.drawArrays(gl.TRIANGLES, 0, n)
 }
 
-tick()
+draw ()
+// tick()
 ///////////////////////shader绑定流程(静态3D图)///////////////////////////
 
 
@@ -178,11 +194,11 @@ tick()
 
 ///////////////////////动态3D图部分///////////////////////////
 
-function animate () {
-  var now = Date.now()
-  var duration = now - g_last
-  g_last = now
-  currentAngle = currentAngle + duration / 1000 * 180
-}
+// function animate () {
+//   var now = Date.now()
+//   var duration = now - g_last
+//   g_last = now
+//   currentAngle = currentAngle + duration / 1000 * 180
+// }
 
 ///////////////////////动态3D图部分///////////////////////////
