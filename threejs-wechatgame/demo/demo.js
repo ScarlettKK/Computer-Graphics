@@ -1,27 +1,6 @@
 // webgl 官方文档与API https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API
 ///////////////////////shader绑定流程(静态3D图)///////////////////////////
 
-/*
-创建静态3D图[针对webgl绘图环境类型]流程总结:
-1. 获取html canvas dom元素
-2. 通过该dom元素的 getContext方法, 获取到用于在画布上绘图的环境, 该环境才具有在canvas上绘制的能力
-   这个环境可以由传入的参数指定类型, 具体有如下类型:
-     "2d", 建立一个 CanvasRenderingContext2D 二维渲染上下文。
-     "webgl" (或"experimental-webgl") 这将创建一个 WebGLRenderingContext 三维渲染上下文对象。只在实现WebGL 版本1(OpenGL ES 2.0)的浏览器上可用。
-     "webgl2" (或 "experimental-webgl2") 这将创建一个 WebGL2RenderingContext 三维渲染上下文对象。只在实现 WebGL 版本2 (OpenGL ES 3.0)的浏览器上可用。
-     "bitmaprenderer" 这将创建一个只提供将canvas内容替换为指定ImageBitmap功能的ImageBitmapRenderingContext。
-3. 在webgl绘图环境中, 创建一个 WebGLProgram (一个webgl绘图环境中可以创建多个WebGLProgram, 每个WebGLProgram有自己的顶点着色器、片元着色器, 也就是对眼不同的静态图像)
-   WebGLProgram 是 WebGL API 的一部分，它由两个WebGLShaders （webgl 着色器）组成，
-   分别为顶点着色器和片元着色器（两种着色器都是采用 GLSL 语言编写的）。
-   创建一个 WebGLProgram 需要调用 GL 绘图环境的createProgram() 方法.
-4. 定义 顶点着色器、片元着色器 (要在哪里画什么图像, 什么颜色)
-5. 然后调用 GL 绘图环境的attachShader()方法给 WebGLProgram 附加上如上所述两个着色器, 一个完整的 WebGLProgram 就此创建完成
-6. 调用 GL 绘图环境的 linkProgram、useProgram 方法, 将这个完整的 WebGLProgram 连接 和 使用到 GL 绘图环境中
-7. (附加)可以给GL 绘图环境扩展属性program值为WebGLProgram, 便于访问
-*/
-
-
-
 
 // 获取canvas dom元素, 但这个dom元素并没有绘制的能力, 只有长宽的属性
 var canvas = document.getElementById('myCanvas')
@@ -61,11 +40,12 @@ var VSHADER_SOURCE, FSHADER_SOURCE
 // 详解见learn.md "glsl语法三种数据类型"
 VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +  // 通过attribute类型定义顶点坐标, vec4是四维向量的意思
-  'uniform mat4 u_ModelMatrix;\n' +
-  'uniform mat4 u_ViewMatrix;\n' +
-  'uniform mat4 u_ProjectionMatrix;\n' + 
+  // 'uniform mat4 u_ModelMatrix;\n' +
+  // 'uniform mat4 u_ViewMatrix;\n' +
+  // 'uniform mat4 u_ProjectionMatrix;\n' + 
   'void main () {\n' + 
-    'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' + 
+    // 'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' + 
+    'gl_Position = a_Position;\n' + 
   '}\n' // 两个着色器都得有一个main函数(入口函数)
 
 // 片元着色器源代码
@@ -118,6 +98,11 @@ gl.program = program
 //   // requestAnimationFrame(tick)
 // }
 
+
+
+
+
+
 // 通过buffer往shader中传递相关的数据
 function initVertexBuffers (gl) {
   // 顶点数据
@@ -140,7 +125,7 @@ function initVertexBuffers (gl) {
   // 现在缓冲区之中已经有数据了, 现在是要把缓冲区的数据传给shader的变量
 
   // get attribute a_Position address in vertex shader
-  // 在 program 之中创建一个a_Position, 作为画布中展示图像的位置
+  // 在 program 之中get到a_Position,这里的a_Position是我们在顶点着色器源代码中定义好的, 作为画布中展示图像的位置
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position')
   // a_Position 和 buffer data绑定, 并且定义接收策略: 几个数字作一组成为一个坐标?数据类型是什么?
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0)
