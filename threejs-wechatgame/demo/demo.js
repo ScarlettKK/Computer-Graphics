@@ -40,12 +40,12 @@ var VSHADER_SOURCE, FSHADER_SOURCE
 // 详解见learn.md "glsl语法三种数据类型"
 VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +  // 通过attribute类型定义顶点坐标, vec4是四维向量的意思
-  // 'uniform mat4 u_ModelMatrix;\n' +
-  // 'uniform mat4 u_ViewMatrix;\n' +
-  // 'uniform mat4 u_ProjectionMatrix;\n' + 
+  'uniform mat4 u_ModelMatrix;\n' + // 旋转矩阵
+  'uniform mat4 u_ViewMatrix;\n' +
+  'uniform mat4 u_ProjectionMatrix;\n' + 
   'void main () {\n' + 
-    // 'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' + 
-    'gl_Position = a_Position;\n' + 
+    'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' +  // a_position的位置乘以旋转矩阵
+    // 'gl_Position = a_Position;\n' + 
   '}\n' // 两个着色器都得有一个main函数(入口函数)
 
 // 片元着色器源代码
@@ -86,17 +86,17 @@ gl.linkProgram(program)
 gl.useProgram(program)
 gl.program = program
 
-// var currentAngle = 0
-// var g_last = Date.now()
+var currentAngle = 0
+var g_last = Date.now()
 
-// var tick = function () {
-//   // update the new rotation angle
-//   // 动态3D图部分 animate
-//   // animate()
-//   // draw
-//   draw()
-//   // requestAnimationFrame(tick)
-// }
+var tick = function () {
+  // update the new rotation angle
+  // 动态3D图部分 animate
+  animate()
+  draw
+  draw()
+  requestAnimationFrame(tick)
+}
 
 
 
@@ -126,6 +126,7 @@ function initVertexBuffers (gl) {
 
   // get attribute a_Position address in vertex shader
   // 在 program 之中get到a_Position,这里的a_Position是我们在顶点着色器源代码中定义好的, 作为画布中展示图像的位置
+  // 给a_Position每一个顶点乘以一个旋转矩阵,就可以得到旋转后的坐标
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position')
   // a_Position 和 buffer data绑定, 并且定义接收策略: 几个数字作一组成为一个坐标?数据类型是什么?
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0)
@@ -148,30 +149,33 @@ var n = initVertexBuffers(gl)
 // 用黑色清空当前画布颜色
 gl.clearColor(0, 0, 0, 1)
 
-// var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix')
-// var modelMatrix = new Matrix4()
+// 旋转矩阵定义
+var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix')
+var modelMatrix = new Matrix4()
 
-// var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
-// var viewMatrix = new Matrix4()
-// viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
+var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
+var viewMatrix = new Matrix4()
+viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
 
-// var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
-// var projectionMatrix = new Matrix4()
-// // projectionMatrix.perspective(120, 1, 0.1, 1000)
-// projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
+var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
+var projectionMatrix = new Matrix4()
+// projectionMatrix.perspective(120, 1, 0.1, 1000)
+projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
+// 旋转矩阵定义
 
 function draw () {
-  // modelMatrix.setRotate(currentAngle, 0, 1, 0)
-  // gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements)
-  // gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
-  // gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
+  // 画图
+  modelMatrix.setRotate(currentAngle, 0, 1, 0)
+  gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements)
+  gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
+  gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
   gl.clear(gl.COLOR_BUFFER_BIT)
   // 绘制三角形
   gl.drawArrays(gl.TRIANGLES, 0, n)
 }
 
-draw ()
-// tick()
+// draw ()
+tick()
 ///////////////////////shader绑定流程(静态3D图)///////////////////////////
 
 
@@ -179,11 +183,14 @@ draw ()
 
 ///////////////////////动态3D图部分///////////////////////////
 
-// function animate () {
-//   var now = Date.now()
-//   var duration = now - g_last
-//   g_last = now
-//   currentAngle = currentAngle + duration / 1000 * 180
-// }
+// 原理: 给三角形每一个顶点乘以一个旋转矩阵,就可以得到旋转后的坐标
+
+// 每秒钟转多少,动起来
+function animate () {
+  var now = Date.now()
+  var duration = now - g_last
+  g_last = now
+  currentAngle = currentAngle + duration / 1000 * 180
+}
 
 ///////////////////////动态3D图部分///////////////////////////
