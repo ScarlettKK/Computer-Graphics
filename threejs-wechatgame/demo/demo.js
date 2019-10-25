@@ -38,9 +38,11 @@ var VSHADER_SOURCE, FSHADER_SOURCE
 
 // 顶点着色器源代码
 // 详解见learn.md "glsl语法三种数据类型"
+// 一开始源代码写的是传人的a_Position,直接用于画图,没有任何变换
+// 后面我们传入一个旋转矩阵,这样就可以得到旋转后的a_Position
 VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +  // 通过attribute类型定义顶点坐标, vec4是四维向量的意思
-  'uniform mat4 u_ModelMatrix;\n' + // 旋转矩阵
+  'uniform mat4 u_ModelMatrix;\n' + // 旋转矩阵,定义为常量
   'uniform mat4 u_ViewMatrix;\n' +
   'uniform mat4 u_ProjectionMatrix;\n' + 
   'void main () {\n' + 
