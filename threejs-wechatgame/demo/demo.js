@@ -157,6 +157,14 @@ var modelMatrix = new Matrix4()
 
 var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
 var viewMatrix = new Matrix4()
+// LookAt()，定义： 其定义在UnityEngine.Transform类中，
+// public void LookAt(Vector3 worldPosition);
+// public void LookAt(Transform target);
+// 用法： 一：transform.LookAt(new Vector3(1,1,1));
+// 使游戏对象看向该坐标点（游戏对象的z轴指向（1，1，1）点）；
+// 二：transform.LookAt(gameobject.transform)
+// 使游戏对象看向gameobject的transform的position;
+// 在场景中创建cube与Sphere两个游戏对象，将脚本挂载到Cube上；
 viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
 
 var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
