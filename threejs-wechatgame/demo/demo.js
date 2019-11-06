@@ -42,11 +42,12 @@ var VSHADER_SOURCE, FSHADER_SOURCE
 // 后面我们传入一个旋转矩阵,这样就可以得到旋转后的a_Position
 VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +  // 通过attribute类型定义顶点坐标, vec4是四维向量的意思
-  'uniform mat4 u_ModelMatrix;\n' + // 旋转矩阵,定义为常量
-  'uniform mat4 u_ViewMatrix;\n' +
-  'uniform mat4 u_ProjectionMatrix;\n' + 
+  'uniform mat4 u_ModelMatrix;\n' + // 旋转矩阵,定义为常量uniform类型
+  // 'uniform mat4 u_ViewMatrix;\n' +
+  // 'uniform mat4 u_ProjectionMatrix;\n' + 
   'void main () {\n' + 
-    'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' +  // a_position的位置乘以旋转矩阵
+    'gl_Position = u_ModelMatrix * a_Position;\n' +  // a_position的位置乘以旋转矩阵
+    // 'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' + 
     // 'gl_Position = a_Position;\n' + 
   '}\n' // 两个着色器都得有一个main函数(入口函数)
 
@@ -87,22 +88,6 @@ gl.attachShader(program, fragmentShader)
 gl.linkProgram(program)
 gl.useProgram(program)
 gl.program = program
-
-var currentAngle = 0
-var g_last = Date.now()
-
-var tick = function () {
-  // update the new rotation angle
-  // 动态3D图部分 animate
-  animate()
-  draw
-  draw()
-  requestAnimationFrame(tick)
-}
-
-
-
-
 
 
 // 通过buffer往shader中传递相关的数据
@@ -153,10 +138,12 @@ gl.clearColor(0, 0, 0, 1)
 
 // 旋转矩阵定义
 var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix')
+// 用matrix.js(依赖文件)获取变换矩阵的值(直接返回)
+// 通过一些设定,就可以得到沿着某轴旋转的变换矩阵 如modelMatrix.setRotate(75,0,1,0)为绕y轴旋转75度的效果
 var modelMatrix = new Matrix4()
 
-var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
-var viewMatrix = new Matrix4()
+// var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
+// var viewMatrix = new Matrix4()
 // LookAt()，定义： 其定义在UnityEngine.Transform类中，
 // public void LookAt(Vector3 worldPosition);
 // public void LookAt(Transform target);
@@ -165,20 +152,21 @@ var viewMatrix = new Matrix4()
 // 二：transform.LookAt(gameobject.transform)
 // 使游戏对象看向gameobject的transform的position;
 // 在场景中创建cube与Sphere两个游戏对象，将脚本挂载到Cube上；
-viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
+// viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
 
-var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
-var projectionMatrix = new Matrix4()
+// var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
+// var projectionMatrix = new Matrix4()
 // projectionMatrix.perspective(120, 1, 0.1, 1000)
-projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
+// projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
 // 旋转矩阵定义
 
 function draw () {
-  // 画图
+  // 画图, 更新旋转角度
   modelMatrix.setRotate(currentAngle, 0, 1, 0)
+  // 往u_ModelMatrix变量中传递数据
   gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements)
-  gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
-  gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
+  // gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
+  // gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
   gl.clear(gl.COLOR_BUFFER_BIT)
   // 绘制三角形
   gl.drawArrays(gl.TRIANGLES, 0, n)
@@ -195,7 +183,25 @@ tick()
 
 // 原理: 给三角形每一个顶点乘以一个旋转矩阵,就可以得到旋转后的坐标
 
-// 每秒钟转多少,动起来
+// 每秒钟转多少,动起来,更新旋转角度
+// 初始化角度为0
+var currentAngle = 0
+// 初始化现在的时间
+var g_last = Date.now()
+
+function tick() {
+  // update the new rotation angle
+  // 动态3D图部分 animate, 更新新的旋转角
+  animate()
+  // draw 绘制旋转后的三角形
+  draw()
+  // requestAnimationFrame: 通用自带API
+  // 告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。
+  // 该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行
+  requestAnimationFrame(tick)
+}
+
+// 更新新的旋转角
 function animate () {
   var now = Date.now()
   var duration = now - g_last
