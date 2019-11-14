@@ -1,0 +1,4 @@
+{
+    "deviceOrientation": "portrait",
+    "description": "游戏配置文件, (大部分都有默认值,不需要自己配,大多针对小程序/手机端提供的环境进行配置)配置项详情请参考: https://developers.weixin.qq.com/minigame/dev/reference/configuration/app.html"
+}

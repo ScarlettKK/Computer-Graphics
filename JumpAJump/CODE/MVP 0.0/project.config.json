@@ -1,5 +1,5 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件。(开发者工具自动提供的默认版本, 一般不需要动, 与项目配置同)",
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
@@ -10,7 +10,7 @@
 	"compileType": "game",
 	"libVersion": "1.9.94",
 	"appid": "wxf159200baeb3e8dc",
-	"projectname": "threejs-wechatgame",
+	"projectname": "MVP%200.0",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
