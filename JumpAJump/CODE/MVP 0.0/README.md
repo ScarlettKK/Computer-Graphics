@@ -10,7 +10,7 @@ sense: 要渲染的元素, 包括光线的情况
 
 camera: 将所有sense画出的场景坐标系转化成相机坐标系
 
-<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94l5jd2h9j31ds0n0ay4.jpg">
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94lpknhvbj31ds0n018k.jpg">
 
 渲染流程:
 
