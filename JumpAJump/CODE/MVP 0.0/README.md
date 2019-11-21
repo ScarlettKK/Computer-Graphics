@@ -38,7 +38,7 @@ camera: 将所有sense画出的场景坐标系转化成相机坐标系
 
 <img src="https://i.loli.net/2019/11/21/6y8K1LeF9oSG4bB.png">
 
-<img src=https://i.loli.net/2019/11/21/B9hyXZ8f6aVHPnt.png">
+<img src="https://i.loli.net/2019/11/21/B9hyXZ8f6aVHPnt.png">
 
 透视投影的结果与什么有关？
 
@@ -48,7 +48,7 @@ camera: 将所有sense画出的场景坐标系转化成相机坐标系
 
 <img src="https://i.loli.net/2019/11/21/zuFPURYOr6JkBQt.png">
 
-<img src=https://i.loli.net/2019/11/21/bRwLvry8ceduDBs.png">
+<img src="https://i.loli.net/2019/11/21/bRwLvry8ceduDBs.png">
 
 正交投影的结果与什么相关？
 
