@@ -27,3 +27,29 @@ camera: 将所有sense画出的场景坐标系转化成相机坐标系
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94l5xgo0yj31ds0n013n.jpg">
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94lc88emoj31ds0n01g9.jpg">
+
+## 透视投影推导
+
+<img src="https://sm.ms/image/eYn1RQEqF7P2xSU">
+
+<img src="https://sm.ms/image/TBRXQKHPxnJeSwd">
+
+<img src="https://sm.ms/image/wqWbHmESu5GyANC">
+
+<img src="https://sm.ms/image/6y8K1LeF9oSG4bB">
+
+<img src="https://sm.ms/image/B9hyXZ8f6aVHPnt">
+
+透视投影的结果与什么有关？
+
+	透视投影前方近平面的长宽比、透视投影形成的fov视角、近平面和远平面的距离
+
+## 正交投影推导
+
+<img src="https://sm.ms/image/zuFPURYOr6JkBQt">
+
+<img src="https://sm.ms/image/bRwLvry8ceduDBs">
+
+正交投影的结果与什么相关？
+
+	近平面和远平面的距离、近平面的大小
