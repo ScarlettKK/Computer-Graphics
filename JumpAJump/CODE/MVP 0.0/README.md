@@ -53,3 +53,12 @@ camera: 将所有sense画出的场景坐标系转化成相机坐标系
 正交投影的结果与什么相关？
 
 	近平面和远平面的距离、近平面的大小
+
+## 视图矩阵推导
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g975xpeswaj31ds0n0dza.jpg">
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g975xtsyyij31ds0n0aya.jpg">
+
+<img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g975xxdwiwj31ds0n0ty0.jpg">
+
