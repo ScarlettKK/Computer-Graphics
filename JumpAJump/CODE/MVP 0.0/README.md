@@ -62,3 +62,4 @@ camera: 将所有sense画出的场景坐标系转化成相机坐标系
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g975xxdwiwj31ds0n0ty0.jpg">
 
+参考链接: [Three.js 入门与扫盲-基础结构,坐标系与几何类型介绍](https://www.jianshu.com/p/854d700b6315)
