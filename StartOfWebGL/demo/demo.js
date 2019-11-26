@@ -43,11 +43,11 @@ var VSHADER_SOURCE, FSHADER_SOURCE
 VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +  // 通过attribute类型定义顶点坐标, vec4是四维向量的意思
   'uniform mat4 u_ModelMatrix;\n' + // 旋转矩阵,定义为常量uniform类型
-  // 'uniform mat4 u_ViewMatrix;\n' +
-  // 'uniform mat4 u_ProjectionMatrix;\n' + 
+  'uniform mat4 u_ViewMatrix;\n' + // 应用视图变换矩阵
+  'uniform mat4 u_ProjectionMatrix;\n' + // 应用投影矩阵
   'void main () {\n' + 
-    'gl_Position = u_ModelMatrix * a_Position;\n' +  // a_position的位置乘以旋转矩阵
-    // 'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' + 
+    // 'gl_Position =  u_ViewMatrix * u_ModelMatrix * a_Position;\n' +  
+    'gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' + // a_position的位置乘以旋转矩阵, 现在加上乘以视图矩阵以及投影矩阵
     // 'gl_Position = a_Position;\n' + 
   '}\n' // 两个着色器都得有一个main函数(入口函数)
 
@@ -142,8 +142,11 @@ var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix')
 // 通过一些设定,就可以得到沿着某轴旋转的变换矩阵 如modelMatrix.setRotate(75,0,1,0)为绕y轴旋转75度的效果
 var modelMatrix = new Matrix4()
 
-// var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
-// var viewMatrix = new Matrix4()
+// 视图矩阵定义
+var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix')
+
+// 视图矩阵
+var viewMatrix = new Matrix4()
 // LookAt()，定义： 其定义在UnityEngine.Transform类中，
 // public void LookAt(Vector3 worldPosition);
 // public void LookAt(Transform target);
@@ -152,12 +155,13 @@ var modelMatrix = new Matrix4()
 // 二：transform.LookAt(gameobject.transform)
 // 使游戏对象看向gameobject的transform的position;
 // 在场景中创建cube与Sphere两个游戏对象，将脚本挂载到Cube上；
-// viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
+viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
 
-// var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
-// var projectionMatrix = new Matrix4()
-// projectionMatrix.perspective(120, 1, 0.1, 1000)
-// projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
+// 投影矩阵
+var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
+var projectionMatrix = new Matrix4()
+projectionMatrix.perspective(120, 1, 0.1, 1000)
+projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
 // 旋转矩阵定义
 
 function draw () {
@@ -165,8 +169,9 @@ function draw () {
   modelMatrix.setRotate(currentAngle, 0, 1, 0)
   // 往u_ModelMatrix变量中传递数据
   gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements)
-  // gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
-  // gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
+  // 将视图矩阵的数据传递到顶点着色器中, viewMatrix就是我们在js代码中需要计算的视图矩阵
+  gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
+  gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements)
   gl.clear(gl.COLOR_BUFFER_BIT)
   // 绘制三角形
   gl.drawArrays(gl.TRIANGLES, 0, n)
