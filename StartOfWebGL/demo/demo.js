@@ -155,12 +155,16 @@ var viewMatrix = new Matrix4()
 // 二：transform.LookAt(gameobject.transform)
 // 使游戏对象看向gameobject的transform的position;
 // 在场景中创建cube与Sphere两个游戏对象，将脚本挂载到Cube上；
+
+// 这里我们在matrix.js中自定义lookAt方法,应用矩阵变换
 viewMatrix.lookAt(100, 100, 100, 0, 0, 0, 0, 1, 0)
 
 // 投影矩阵
 var u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix')
 var projectionMatrix = new Matrix4()
+// 这里我们在matrix.js中自定义perspective方法,应用矩阵变换
 projectionMatrix.perspective(120, 1, 0.1, 1000)
+// 这里我们在matrix.js中自定义ortho方法,应用矩阵变换
 projectionMatrix.ortho(-1, 1, -1, 1, 0.1, 1000)
 // 旋转矩阵定义
 

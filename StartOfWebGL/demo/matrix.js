@@ -219,11 +219,12 @@ Matrix4.prototype.invert = function() {
   return this.setInverseOf(this);
 };
 
+// 自定义lookAt方法,对Matrix4进行扩展
 Matrix4.prototype.lookAt = function(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
   return this.concat(new Matrix4().setLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ));
 };
 
-
+// 自定义lookAt方法,对Matrix4进行扩展
 Matrix4.prototype.setLookAt = function (eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
   var e, fx, fy,fz, rlf, sx, sy, sz, rls, ux, uy, uz;
   fx = centerY - eyeX;
@@ -259,6 +260,7 @@ Matrix4.prototype.setLookAt = function (eyeX, eyeY, eyeZ, centerX, centerY, cent
 
 }
 
+// 自定义投影矩阵算法
 Matrix4.prototype.perspective = function (fovy, aspect, near, far) {
   return this.concat(new Matrix4().setPerspective(fovy, aspect, near, far));
 }
@@ -296,10 +298,11 @@ Matrix4.prototype.setPerspective = function (fovy, aspect, near, far) {
   return this;
 }
 
+// 自定义投影矩阵
 Matrix4.prototype.ortho = function(left, right, bottom, top, near, far) {
   return this.concat(new Matrix4().setOrtho(left, right, bottom, top, near, far));
 }
-
+// 自定义投影矩阵方法
 Matrix4.prototype.setOrtho = function(left, right, bottom, top, near, far) {
   if (left === right || bottom === top || near === far) {
     throw 'null frustum';
