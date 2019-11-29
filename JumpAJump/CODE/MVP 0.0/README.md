@@ -24,6 +24,8 @@ camera: 将所有sense画出的场景坐标系转化成相机坐标系
 
 当然还需要了解一些其中的线性代数原理...
 
+线性代数基础: [WebGL学习系列-基础矩阵变换](https://blog.csdn.net/yanyan19880509/article/details/57411916)
+
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94l5xgo0yj31ds0n013n.jpg">
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94lc88emoj31ds0n01g9.jpg">
