@@ -1,10 +1,12 @@
+import controller from './controller'
+
 class Game {
 	constructor(){
 
 	}
 
 	init(){
-
+		controller.initPages()
 	}
 }
 
