@@ -26,6 +26,8 @@ camera: 将所有sense画出的场景坐标系转化成相机坐标系
 
 线性代数基础: [WebGL学习系列-基础矩阵变换](https://blog.csdn.net/yanyan19880509/article/details/57411916)
 
+webGL中的矩阵种类: [WebGL矩阵变换总结（模型矩阵，视图矩阵，投影矩阵）](https://blog.csdn.net/weixin_37683659/article/details/79622618)
+
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94l5xgo0yj31ds0n013n.jpg">
 
 <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94lc88emoj31ds0n01g9.jpg">
