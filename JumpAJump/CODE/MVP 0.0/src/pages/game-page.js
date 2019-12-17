@@ -11,8 +11,8 @@ export default class GamePage {
 
 
 		// 设置canvas长宽
-		var width = 400
-		var height = 400
+		var width =  window.innerWidth
+		var height = window.innerHeight
 
 
 
