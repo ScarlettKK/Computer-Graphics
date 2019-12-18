@@ -16,7 +16,10 @@ class GameView {
 
 	initGameOverPage(callbacks){
 		this.gameOverPage = new GameOverPage(callbacks)
-		this.gameOverPage.init()
+		this.gameOverPage.init({
+			// 共享scene
+			scene: this.gamePage.scene
+		})
 	}
 
 	initGamePage(callbacks){

@@ -23,6 +23,8 @@ export default class GamePage {
 		})
 		// 获取scene
 		var scene = new THREE.Scene()
+		// 设置当前scene可被访问
+		this.scene = scene;
 		// 获取camera,使用正交相机(2d平面效果),设置上下左右前后的坐标情况,以便可以被相机截取
 		var camera = new THREE.OrthographicCamera(-width / 2, width / 2,
 		height / 2, -height / 2, -1000, 1000)
