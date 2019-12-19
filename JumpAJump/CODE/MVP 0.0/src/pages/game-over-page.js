@@ -27,20 +27,27 @@ export default class GameOverPage {
 			transparent: true,
 			side: THREE.DoubleSide
 		}) // 设置双面后才可见
-		this.geometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight)
+		this.geometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
 		this.obj = new THREE.Mesh(this.geometry, this.material)
 		this.obj.position.z = 1;
+
+		this.obj.rotation.y = Math.PI;
 
 		// 拿到画布
 		this.context = this.canvas.getContext('2d')
 		this.context.fillStyle = '#333'
-		this.context.fillRect(0,0,(window.innerWidth - 200) / 2, (window.innerHeight - 100) / 2)
+		this.context.fillRect((window.innerWidth - 200) / 2, (window.innerHeight - 100) / 2, 200, 100)
 
 		// this.context.glTexParameter(this.context.TEXTURE_2D, this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
 		// this.context.glTexParameter(this.context.TEXTURE_2D, this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
-
+		
+		this.context.fillStyle = '#eee';
+		this.context.font = '20px Georgia';
+		this.context.fillText('game over',(window.innerWidth - 200) / 2 + 50, (window.innerHeight - 100) / 2 + 55)
+		// 一次更新
 		this.textture.needUpdate = true;
-		this.context.fillStyle = '#eee'
+
+		
 
 		this.scene.add(this.obj)
 

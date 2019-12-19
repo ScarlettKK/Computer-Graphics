@@ -66,7 +66,11 @@ export default class GamePage {
 		// 相机一般设置在原点
 		mesh.position.z = 1
 		// 将mesh添加在sence中
-		scene.add(mesh)
+		// scene.add(mesh)
+
+		// threejs中带helper的功能,可以帮助我们看到相机的位置,作辅助线等
+		var axesHelper = new THREE.AxisHelper(100)
+		scene.add(axesHelper)
 
 
 
