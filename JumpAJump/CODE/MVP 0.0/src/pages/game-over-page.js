@@ -24,8 +24,9 @@ export default class GameOverPage {
 		// 生成透明obj
 		this.material = new THREE.MeshBasicMaterial({
 			map: this.textture,
-			transparent: true,
-			side: THREE.DoubleSide
+			transparent: false,
+			side: THREE.DoubleSide,
+			color:0xeeefff
 		}) // 设置双面后才可见
 		this.geometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
 		this.obj = new THREE.Mesh(this.geometry, this.material)

@@ -38,33 +38,33 @@ export default class GamePage {
 
 
 
-		// 画三角形, Shape可以基于路线画出各种形状的图形
-		var triangleShape = new THREE.Shape()
-		// 起始画笔移动到0, 100)
-		triangleShape.moveTo(0, 100)
-		// 画一条线到(-100, -100)
-		triangleShape.lineTo(-100, -100)
-		// 再画一条线到(100, -100)
-		triangleShape.lineTo(100, -100)
-		// 再画一条线到(0, 100)
-		triangleShape.lineTo(0, 100)
+		// // 画三角形, Shape可以基于路线画出各种形状的图形
+		// var triangleShape = new THREE.Shape()
+		// // 起始画笔移动到0, 100)
+		// triangleShape.moveTo(0, 100)
+		// // 画一条线到(-100, -100)
+		// triangleShape.lineTo(-100, -100)
+		// // 再画一条线到(100, -100)
+		// triangleShape.lineTo(100, -100)
+		// // 再画一条线到(0, 100)
+		// triangleShape.lineTo(0, 100)
 
 
 
-		// 使用Shape创建geometry几何体
-		var geometry = new THREE.ShapeGeometry(triangleShape)
-		// 几何体用什么素材material来进行绘制(光面?哑光?)
-		var material = new THREE.MeshBasicMaterial({
-		  color: 0xff0000, // 颜色:红色
-		  side: THREE.DoubleSide // 单面/双面? 默认是单面
-		})
-		// 整合几何体和材质(类似于结合vertex与fragment)
-		var mesh = new THREE.Mesh(geometry, material)
-		// 设置mesh的位置
-		mesh.position.x = 0
-		mesh.position.y = 0
-		// 相机一般设置在原点
-		mesh.position.z = 1
+		// // 使用Shape创建geometry几何体
+		// var geometry = new THREE.ShapeGeometry(triangleShape)
+		// // 几何体用什么素材material来进行绘制(光面?哑光?)
+		// var material = new THREE.MeshBasicMaterial({
+		//   color: 0xff0000, // 颜色:红色
+		//   side: THREE.DoubleSide // 单面/双面? 默认是单面
+		// })
+		// // 整合几何体和材质(类似于结合vertex与fragment)
+		// var mesh = new THREE.Mesh(geometry, material)
+		// // 设置mesh的位置
+		// mesh.position.x = 0
+		// mesh.position.y = 0
+		// // 相机一般设置在原点
+		// mesh.position.z = 1
 		// 将mesh添加在sence中
 		// scene.add(mesh)
 
@@ -84,26 +84,26 @@ export default class GamePage {
 
 
 		// 让三角形动起来的部分
-		var currentAngle = 0
-		var lastTimestamp = Date.now()
+		// var currentAngle = 0
+		// var lastTimestamp = Date.now()
 
-		// 获取每秒钟的旋转角度
-		var animate = function () {
-		  var now = Date.now()
-		  var duration = now - lastTimestamp
-		  lastTimestamp = now
-		  currentAngle = currentAngle + duration / 1000 * Math.PI
-		}
+		// // 获取每秒钟的旋转角度
+		// var animate = function () {
+		//   var now = Date.now()
+		//   var duration = now - lastTimestamp
+		//   lastTimestamp = now
+		//   currentAngle = currentAngle + duration / 1000 * Math.PI
+		// }
 
 		var render = function () {
 		  // 计算角度
-		  animate()
-		  // 将mesh旋转 指定的角度, 通过rotation.set即可设定
-		  mesh.rotation.set(0, 0, currentAngle)
+		  // animate()
+		  // // 将mesh旋转 指定的角度, 通过rotation.set即可设定
+		  // mesh.rotation.set(0, 0, currentAngle)
 		  // 画图指令
 		  renderer.render(scene, camera)
 		  // 进行动画逐帧的渲染
-		  requestAnimationFrame(render)
+		  // requestAnimationFrame(render)
 		}
 
 		render()
